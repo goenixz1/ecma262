@@ -4488,25 +4488,33 @@
           </ul>
         </emu-note>
 
-        <emu-clause id="sec-runtime-semantics-mv-s">
-          <h1>Runtime Semantics: MV</h1>
-          <p>The conversion of a String to a Number value is similar overall to the determination of the Number value for a numeric literal (see <emu-xref href="#sec-literals-numeric-literals"></emu-xref>), but some of the details are different, so the process for converting a String numeric literal to a value of Number type is given here. Additional definitions for MV are provided in <emu-xref href="#sec-static-semantics-mv"></emu-xref>.</p>
-          <emu-grammar>
-            StringNumericLiteral ::: [empty]
-            StringNumericLiteral ::: StrWhiteSpace
-          </emu-grammar>
+        <emu-clause id="sec-runtime-semantics-stringnumericvalue" aoid="StringNumericValue" oldids="sec-runtime-semantics-mv-s">
+          <h1>Runtime Semantics: StringNumericValue</h1>
+          <p>The conversion of a String to a Number value is similar overall to the determination of the Number value for a numeric literal (see <emu-xref href="#sec-literals-numeric-literals"></emu-xref>), but some of the details are different, so the process for converting a String numeric literal to a value of Number type is given here.</p>
+          <emu-grammar>StringNumericLiteral ::: StrWhiteSpace?</emu-grammar>
           <emu-alg>
             1. Return *+0*<sub>𝔽</sub>.
           </emu-alg>
           <emu-grammar>StringNumericLiteral ::: StrWhiteSpace? StrNumericLiteral StrWhiteSpace?</emu-grammar>
           <emu-alg>
-            1. Return 𝔽(MV of |StrNumericLiteral|).
+            1. Return StringNumericValue of |StrNumericLiteral|.
+          </emu-alg>
+          <emu-grammar>StrNumericLiteral ::: NonDecimalIntegerLiteral</emu-grammar>
+          <emu-alg>
+            1. Return RoundStringMVResult(MV of |NonDecimalIntegerLiteral|).
+          </emu-alg>
+          <emu-grammar>
+            StrDecimalLiteral ::: StrUnsignedDecimalLiteral
+            StrDecimalLiteral ::: `+` StrUnsignedDecimalLiteral
+          </emu-grammar>
+          <emu-alg>
+            1. Return StringNumericValue of |StrUnsignedDecimalLiteral|.
           </emu-alg>
           <emu-grammar>StrDecimalLiteral ::: `-` StrUnsignedDecimalLiteral</emu-grammar>
           <emu-alg>
-            1. Let _a_ be MV of |StrUnsignedDecimalLiteral|.
-            1. If _a_ is 0, return *-0*<sub>𝔽</sub>.
-            1. Return RoundStringMVResult(-1 &times; _a_).
+            1. Let _a_ be StringNumericValue of |StrUnsignedDecimalLiteral|.
+            1. If _a_ is *+0*<sub>𝔽</sub>, return *-0*<sub>𝔽</sub>.
+            1. Return -_a_.
           </emu-alg>
           <emu-grammar>StrUnsignedDecimalLiteral ::: `Infinity`</emu-grammar>
           <emu-alg>
