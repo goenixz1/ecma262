@@ -4491,8 +4491,10 @@
         <emu-clause id="sec-runtime-semantics-mv-s">
           <h1>Runtime Semantics: MV</h1>
           <p>The conversion of a String to a Number value is similar overall to the determination of the Number value for a numeric literal (see <emu-xref href="#sec-literals-numeric-literals"></emu-xref>), but some of the details are different, so the process for converting a String numeric literal to a value of Number type is given here. Additional definitions for MV are provided in <emu-xref href="#sec-static-semantics-mv"></emu-xref>.</p>
-          <emu-grammar>StringNumericLiteral ::: [empty]</emu-grammar>
-          <emu-grammar>StringNumericLiteral ::: StrWhiteSpace</emu-grammar>
+          <emu-grammar>
+            StringNumericLiteral ::: [empty]
+            StringNumericLiteral ::: StrWhiteSpace
+          </emu-grammar>
           <emu-alg>
             1. Return *+0*<sub>𝔽</sub>.
           </emu-alg>
@@ -4537,7 +4539,7 @@
           <h1>RoundStringMVResult ( _n_ )</h1>
           <p>The abstract operation RoundStringMVResult takes argument _n_ (a mathematical value). It converts _n_ to a Number in an implementation-defined manner. For the purposes of this abstract operation, a digit is significant if it is not zero or there is a non-zero digit to its left and there is a non-zero digit to its right. It performs the following steps when called:</p>
           <emu-alg>
-            1. If the decimal representation of _n_ has fewer than 20 significant digits in its decimal representation, return 𝔽(_n_).
+            1. If the decimal representation of _n_ has fewer than 20 significant digits, return 𝔽(_n_).
             1. Let _option1_ be the mathematical value denoted by the result of replacing each significant digit in the decimal representation of _n_ after the 20th with a 0 digit.
             1. Let _option2_ be the mathematical value denoted by the result of replacing each significant digit in the decimal representation of _n_ after the 20th with a 0 digit and then incrementing it at the 20th position (with carrying as necessary).
             1. Let _chosen_ be an implementation-defined choice of either _option1_ or _option2_.
