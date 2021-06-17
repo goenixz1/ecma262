@@ -4545,7 +4545,7 @@
 
         <emu-clause id="sec-roundstringmvresult" aoid="RoundStringMVResult">
           <h1>RoundStringMVResult ( _n_ )</h1>
-          <p>The abstract operation RoundStringMVResult takes argument _n_ (a mathematical value). It converts _n_ to a Number in an implementation-defined manner. For the purposes of this abstract operation, a digit is significant if it is not zero or there is a non-zero digit to its left and there is a non-zero digit to its right. It performs the following steps when called:</p>
+          <p>The abstract operation RoundStringMVResult takes argument _n_ (a mathematical value). It converts _n_ to a Number in an implementation-defined manner. For the purposes of this abstract operation, a digit is significant if it is not zero or there is a non-zero digit to its left and there is a non-zero digit to its right. For the purposes of this abstract operation, "the mathematical value denoted by" a representation of a mathematical value is the inverse of "the decimal representation of" a mathematical value. It performs the following steps when called:</p>
           <emu-alg>
             1. If the decimal representation of _n_ has fewer than 20 significant digits, return 𝔽(_n_).
             1. Let _option1_ be the mathematical value denoted by the result of replacing each significant digit in the decimal representation of _n_ after the 20th with a 0 digit.
