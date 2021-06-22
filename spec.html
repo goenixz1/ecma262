@@ -4488,7 +4488,7 @@
           </ul>
         </emu-note>
 
-        <emu-clause id="sec-runtime-semantics-stringnumericvalue" aoid="StringNumericValue" oldids="sec-runtime-semantics-mv-s">
+        <emu-clause id="sec-runtime-semantics-stringnumericvalue" type="sdo" aoid="StringNumericValue" oldids="sec-runtime-semantics-mv-s">
           <h1>Runtime Semantics: StringNumericValue</h1>
           <p>The conversion of a String to a Number value is similar overall to the determination of the Number value for a numeric literal (see <emu-xref href="#sec-literals-numeric-literals"></emu-xref>), but some of the details are different, so the process for converting a String numeric literal to a value of Number type is given here.</p>
           <emu-grammar>StringNumericLiteral ::: StrWhiteSpace?</emu-grammar>
@@ -4501,14 +4501,7 @@
           </emu-alg>
           <emu-grammar>StrNumericLiteral ::: NonDecimalIntegerLiteral</emu-grammar>
           <emu-alg>
-            1. Return RoundStringMVResult(MV of |NonDecimalIntegerLiteral|).
-          </emu-alg>
-          <emu-grammar>
-            StrDecimalLiteral ::: StrUnsignedDecimalLiteral
-            StrDecimalLiteral ::: `+` StrUnsignedDecimalLiteral
-          </emu-grammar>
-          <emu-alg>
-            1. Return StringNumericValue of |StrUnsignedDecimalLiteral|.
+            1. Return 𝔽(MV of |NonDecimalIntegerLiteral|).
           </emu-alg>
           <emu-grammar>StrDecimalLiteral ::: `-` StrUnsignedDecimalLiteral</emu-grammar>
           <emu-alg>
@@ -4526,28 +4519,28 @@
             1. If the second |DecimalDigits| is present, let _b_ be MV of the second |DecimalDigits|. Otherwise, let _b_ be 0.
             1. If |ExponentPart| is present, let _e_ be MV of |ExponentPart|. Otherwise, let _e_ be 0.
             1. Let _n_ be the number of code points in the second |DecimalDigits|.
-            1. Return RoundStringMVResult((_a_ + (_b_ &times; 10<sup>-_n_</sup>)) &times; 10<sup>_e_</sup>).
+            1. Return RoundMVResult((_a_ + (_b_ &times; 10<sup>-_n_</sup>)) &times; 10<sup>_e_</sup>).
           </emu-alg>
           <emu-grammar>StrUnsignedDecimalLiteral ::: `.` DecimalDigits ExponentPart?</emu-grammar>
           <emu-alg>
             1. Let _a_ be MV of |DecimalDigits|.
             1. If |ExponentPart| is present, let _e_ be MV of |ExponentPart|. Otherwise, let _e_ be 0.
             1. Let _n_ be the number of code points in |DecimalDigits|.
-            1. Return RoundStringMVResult(_a_ &times; 10<sup>_e_-_n_</sup>).
+            1. Return RoundMVResult(_a_ &times; 10<sup>_e_ - _n_</sup>).
           </emu-alg>
           <emu-grammar>StrUnsignedDecimalLiteral ::: DecimalDigits ExponentPart?</emu-grammar>
           <emu-alg>
             1. Let _a_ be MV of |DecimalDigits|.
             1. If |ExponentPart| is present, let _e_ be MV of |ExponentPart|. Otherwise, let _e_ be 0.
-            1. Return RoundStringMVResult(_a_ &times; 10<sup>_e_</sup>).
+            1. Return RoundMVResult(_a_ &times; 10<sup>_e_</sup>).
           </emu-alg>
         </emu-clause>
 
-        <emu-clause id="sec-roundstringmvresult" aoid="RoundStringMVResult">
-          <h1>RoundStringMVResult ( _n_ )</h1>
-          <p>The abstract operation RoundStringMVResult takes argument _n_ (a mathematical value). It converts _n_ to a Number in an implementation-defined manner. For the purposes of this abstract operation, a digit is significant if it is not zero or there is a non-zero digit to its left and there is a non-zero digit to its right. For the purposes of this abstract operation, "the mathematical value denoted by" a representation of a mathematical value is the inverse of "the decimal representation of" a mathematical value. It performs the following steps when called:</p>
+        <emu-clause id="sec-roundmvresult" aoid="RoundMVResult">
+          <h1>RoundMVResult ( _n_ )</h1>
+          <p>The abstract operation RoundMVResult takes argument _n_ (a mathematical value). It converts _n_ to a Number in an implementation-defined manner. For the purposes of this abstract operation, a digit is significant if it is not zero or there is a non-zero digit to its left and there is a non-zero digit to its right. For the purposes of this abstract operation, "the mathematical value denoted by" a representation of a mathematical value is the inverse of "the decimal representation of" a mathematical value. It performs the following steps when called:</p>
           <emu-alg>
-            1. If the decimal representation of _n_ has fewer than 20 significant digits, return 𝔽(_n_).
+            1. If the decimal representation of _n_ has 20 or fewer significant digits, return 𝔽(_n_).
             1. Let _option1_ be the mathematical value denoted by the result of replacing each significant digit in the decimal representation of _n_ after the 20th with a 0 digit.
             1. Let _option2_ be the mathematical value denoted by the result of replacing each significant digit in the decimal representation of _n_ after the 20th with a 0 digit and then incrementing it at the 20th position (with carrying as necessary).
             1. Let _chosen_ be an implementation-defined choice of either _option1_ or _option2_.
@@ -14251,11 +14244,11 @@
         <h1>Static Semantics: NumericValue</h1>
         <emu-grammar>NumericLiteral :: DecimalLiteral</emu-grammar>
         <emu-alg>
-          1. Return RoundStringMVResult(MV of |DecimalLiteral|).
+          1. Return RoundMVResult(MV of |DecimalLiteral|).
         </emu-alg>
         <emu-grammar>NumericLiteral :: NonDecimalIntegerLiteral</emu-grammar>
         <emu-alg>
-          1. Return RoundStringMVResult(MV of |NonDecimalIntegerLiteral|).
+          1. Return RoundMVResult(MV of |NonDecimalIntegerLiteral|).
         </emu-alg>
         <emu-grammar>NumericLiteral :: NonDecimalIntegerLiteral BigIntLiteralSuffix</emu-grammar>
         <emu-alg>
